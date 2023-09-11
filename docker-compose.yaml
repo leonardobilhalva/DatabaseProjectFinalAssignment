@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    build: ./app/
+  db:
+    build: ./database/
+  # servidor_1:
+  #   image: linux-cpp
+  #   volumes:
+  #     - .:/work
+  #   command: bash -c "/usr/bin/g++ -fdiagnostics-color=always -g $(pwd)/Server/src/*.cpp $(pwd)/Common/src/*.cpp -o $(pwd)/Server/main.o && $(pwd)/Server/main.o && tail -f /dev/null"
