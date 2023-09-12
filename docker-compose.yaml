@@ -3,10 +3,17 @@ version: '3.8'
 services:
   app:
     build: ./app/
+    networks:
+      - mynetwork # Assign the app container to the custom network
+    depends_on:
+      - db # Ensure that the app container starts after the db container
+
   db:
     build: ./database/
-  # servidor_1:
-  #   image: linux-cpp
-  #   volumes:
-  #     - .:/work
-  #   command: bash -c "/usr/bin/g++ -fdiagnostics-color=always -g $(pwd)/Server/src/*.cpp $(pwd)/Common/src/*.cpp -o $(pwd)/Server/main.o && $(pwd)/Server/main.o && tail -f /dev/null"
+    ports:
+      - '5432:5432'
+    networks:
+      - mynetwork # Assign the db container to the custom network
+
+networks:
+  mynetwork: # Define a custom network named "mynetwork"
