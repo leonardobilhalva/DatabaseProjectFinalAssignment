@@ -18,14 +18,14 @@ def queryGeneral(cursor):
 def queryCourseEvasionOne(cursor):
 
     cursor.execute(
-        "SELECT nome_curso, SUM(evadidos) as total_evadidos FROM quantitativo_alunos WHERE ano >= 2023 - 5 GROUP BY nome_curso ORDER BY total_evadidos DESC LIMIT 5;")
+        "SELECT nome_curso, SUM(evadidos) as total_evadidos FROM quantitativo_alunos_graduacao WHERE ano >= 2023 - 5 GROUP BY nome_curso ORDER BY total_evadidos DESC LIMIT 5;")
     rows = cursor.fetchall()
 
 
 def queryCourseEvasionTwo(cursor):
 
     cursor.execute(
-        "SELECT nome_curso, SUM(evadidos) as total_evadidos FROM quantitativo_alunos WHERE ano >= 2023 - 13 GROUP BY nome_curso ORDER BY total_evadidos DESC LIMIT 5;")
+        "SELECT nome_curso, SUM(evadidos) as total_evadidos FROM quantitativo_alunos_graduacao WHERE ano >= 2023 - 13 GROUP BY nome_curso ORDER BY total_evadidos DESC LIMIT 5;")
     rows = cursor.fetchall()
 
 
@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
         while True:  # execute queries here
             print('The last value inserted is: zero')
-            queryGeneral(cursor)
+            queryCourseEvasionOne(cursor)
 
             time.sleep(5)
 
