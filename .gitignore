@@ -160,8 +160,3 @@ cython_debug/
 #.idea/
 
 .vscode
-
-#poetry files
-poetry.lock
-pyproject.toml
-
