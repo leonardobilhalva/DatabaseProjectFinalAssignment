@@ -14,31 +14,9 @@ db_string = 'postgresql://{}:{}@{}:{}/{}'.format(
     db_user, db_pass, db_host, db_port, db_name)
 db = create_engine(db_string)
 
-
-def add_new_row(n):
-    # Insert a new number into the 'numbers' table.
-    timestamp = int(round(time.time() * 1000))
-    query = f"INSERT INTO numbers (number, timestamp) VALUES ({n}, {timestamp});"
-    db.execute(query)
-
-
-def get_last_row():
-    # Retrieve the last number inserted inside the 'numbers'
-    query = """
-        SELECT number
-        FROM numbers
-        WHERE timestamp >= (SELECT max(timestamp) FROM numbers)
-        LIMIT 1
-    """
-    result_set = db.execute(query)
-    for r in result_set:
-        return r[0]
-
-
 if __name__ == '__main__':
     print('Application started')
 
     while True:
-        add_new_row(random.randint(1, 100000))
-        print('The last value inserted is: {}'.format(get_last_row()))
+        print('The last value inserted is: zero')
         time.sleep(5)
