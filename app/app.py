@@ -29,6 +29,20 @@ def queryCourseEvasionTwo(cursor):
     rows = cursor.fetchall()
 
 
+def queryCourseGradutadedAlumns(cursor):
+
+    cursor.execute(
+        "SELECT nome_curso, SUM(diplomados) as total_diplomados FROM quantitativo_alunos_graduacao GROUP BY nome_curso ORDER BY total_diplomados DESC LIMIT 5;")
+    rows = cursor.fetchall()
+
+
+def queryCourseEntrants(cursor):
+
+    cursor.execute(
+        "SELECT nome_curso, SUM(ingressantes) as total_ingressantes FROM quantitativo_alunos_graduacao GROUP BY nome_curso ORDER BY total_ingressantes DESC LIMIT 5;")
+    rows = cursor.fetchall()
+
+
 if __name__ == '__main__':
     print('Application started')
     conn = None  # Initialize conn and cursor variables
@@ -52,7 +66,8 @@ if __name__ == '__main__':
 
         while True:  # execute queries here
             print('The last value inserted is: zero')
-            queryCourseEvasionOne(cursor)
+            # queryCourseGradutadedAlumns(cursor)
+            # queryCourseEntrants(cursor)
 
             time.sleep(5)
 
