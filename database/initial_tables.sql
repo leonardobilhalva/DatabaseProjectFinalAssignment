@@ -1,8 +1,8 @@
 -- DROP TABLE IF EXISTS QuantitativoAlunosGraduacao;
 
-CREATE TABLE IF NOT EXISTS QuantitativoAlunosGraduacao (
-    CodCurso INT,
-    NomeCurso TEXT,
+CREATE TABLE IF NOT EXISTS quantitativo_alunos_graduacao (
+    Cod_Curso INT,
+    Nome_Curso TEXT,
     Ano INT,
     Periodo INT,
     Vinculados INT,
@@ -12,12 +12,12 @@ CREATE TABLE IF NOT EXISTS QuantitativoAlunosGraduacao (
     Evadidos INT -- Remove the comma here
 );
 
-CREATE TABLE IF NOT EXISTS ProcessoSeletivosGraduacao (
+CREATE TABLE IF NOT EXISTS processo_seletivos_graduacao (
     Ano INT,
-    ProcessoSeletivo TEXT,
+    Processo_Seletivo TEXT,
     Curso TEXT,
-    SiglaModalidadeVaga TEXT,
+    Sigla_Modalidade_Vaga TEXT,
     ModalidadeVaga TEXT,
     Semestre INT,
-    NrVagas INT -- Remove the comma here
+    Nr_Vagas INT -- Remove the comma here
 );
