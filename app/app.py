@@ -43,6 +43,13 @@ def queryCourseEntrants(cursor):
     rows = cursor.fetchall()
 
 
+def queryCourseEvasionThree(cursor):
+
+    cursor.execute(
+        "SELECT nomecurso, ((evadidos/vinculados)*100) as porcentagem_evadidos FROM quantitativo_alunos_graduacao ORDER BY porcentagem_evadidos DESC LIMIT 5;")
+    rows = cursor.fetchall()
+
+
 if __name__ == '__main__':
     print('Application started')
     conn = None  # Initialize conn and cursor variables
