@@ -1,5 +1,6 @@
 import time
 import psycopg2
+import Seed
 
 db_name = 'database'
 db_user = 'username'
@@ -61,22 +62,13 @@ if __name__ == '__main__':
         )
         cursor = conn.cursor()  # connect to database and create a cursor
 
-        with open('files/dadosabertos_graduacao_processos_seletivos.csv', 'r') as file:
-            cursor.copy_expert(
-                sql="COPY Processo_Seletivos_Graduacao FROM stdin WITH CSV HEADER DELIMITER ';'", file=file)
-        conn.commit()  # add data from csv to ProcessoSeletivosGraduacao and commit
-
-        with open('files/dadosabertos_graduacao_quantitativo-de-alunos.csv', 'r') as file:
-            cursor.copy_expert(
-                sql="COPY Quantitativo_Alunos_Graduacao FROM stdin WITH CSV HEADER DELIMITER ';'", file=file)
-        conn.commit()  # add data from csv to QuantitativoAlunosGraduacao and commit
-
-        while True:  # execute queries here
-            print('The last value inserted is: zero')
-            # queryCourseGradutadedAlumns(cursor)
-            # queryCourseEntrants(cursor)
-
-            time.sleep(5)
+        cursor.execute("SELECT * FROM Processo_Seletivos_Graduacao")
+        queryResult = cursor.fetchall()
+        cursor.execute("SELECT * FROM Quantitativo_Alunos_Graduacao")
+        queryResult += cursor.fetchall()
+        if len(queryResult) == 0:
+            print("Executing table seeding")
+            Seed.Seed(cursor, conn)
 
     except Exception as e:
         print('Error:', str(e))
