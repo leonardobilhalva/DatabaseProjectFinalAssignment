@@ -3,27 +3,26 @@ import psycopg2
 import matplotlib.pyplot as plt
 import numpy as np
 
-# query para usar
-# SELECT count(*) as matriculados, ano, semestre, curso FROM processo_seletivos_graduacao WHERE curso like 'Admin%' GROUP BY curso, ano, semestre ORDER BY ano, semestre
-# SELECT ano,periodo,sum(evadidos) AS evadidos FROM quantitativo_alunos_graduacao WHERE nome_curso like 'CIÊNCIA DA COMPUTAÇÃO' GROUP BY nome_curso,ano,periodo ORDER BY ano,periodo;
-
-db_name = 'projetobd'
-db_user = 'postgres'
-db_pass = 'postgres'
+db_name = 'database'
+db_user = 'username'
+db_pass = 'secret'
 db_host = 'localhost'
 db_port = '5432'
 
+
 def evadidos(cursor, curso):
     cursor.execute(
-        "SELECT sum(evadidos) AS evadidos FROM quantitativo_alunos_graduacao WHERE nome_curso = '%s' GROUP BY nome_curso,ano,periodo ORDER BY ano,periodo;"%(curso))
+        "SELECT sum(evadidos) AS evadidos FROM quantitativo_alunos_graduacao WHERE nome_curso = '%s' GROUP BY nome_curso,ano,periodo ORDER BY ano,periodo;" % (curso))
     rows = cursor.fetchall()
     return rows
+
 
 def semestres(cursor):
     cursor.execute(
         "SELECT ano,periodo FROM quantitativo_alunos_graduacao GROUP BY ano,periodo ORDER BY ano,periodo;")
     rows = cursor.fetchall()
     return rows
+
 
 def plot(cursos, semestres):
     x = np.arange(len(semestres))  # the label locations
@@ -46,6 +45,7 @@ def plot(cursos, semestres):
     # ax.set_ylim(0, 250)
 
     plt.savefig('save1.png', dpi=300, bbox_inches='tight')
+    plt.show()
 
 
 if __name__ == '__main__':
@@ -59,17 +59,16 @@ if __name__ == '__main__':
         )
         cursor = conn.cursor()  # connect to database and create a cursor
 
-        raw_cursos = ["CIÊNCIA DA COMPUTAÇÃO", "ENGENHARIA CIVIL", "CIÊNCIAS JURÍDICAS E SOCIAIS"]
-        semestres = ["%s/%s"%(s[0],s[1]) for s in semestres(cursor)]
+        raw_cursos = ["ciência da computação",
+                      "engenharia civil", "ciências jurídicas e sociais"]
+        semestres = ["%s/%s" % (s[0], s[1]) for s in semestres(cursor)]
         cursos = {}
         for curso in raw_cursos:
             data = [e[0] for e in evadidos(cursor, curso)]
             cursos[curso] = data
         print(cursos)
-        plot(cursos,semestres)
+        plot(cursos, semestres)
 
-
-        
     except Exception as e:
         print('Error:', str(e))
 
